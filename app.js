@@ -18,7 +18,7 @@ const corsOptions = {
 }
 
 
-app.use(cors(corsOptions)) // Use this after the variable declaration
+app.use(cors()) // Use this after the variable declaration
 
 //midddleware
 app.use(express.static('./public'));
