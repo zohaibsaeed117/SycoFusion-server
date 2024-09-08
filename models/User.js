@@ -14,6 +14,7 @@ const users = new Schema({
   lastName: { type: String },
   age: { type: Number },
   avatar: { type: String },
+  cover: { type: String },
   password: { type: String },
   role: { type: String },
   skills: { type: String },
