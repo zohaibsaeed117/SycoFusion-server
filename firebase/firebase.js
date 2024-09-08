@@ -1,7 +1,6 @@
 // config/firebaseConfig.js
 const admin = require('firebase-admin');
 require('dotenv').config();
-
 admin.initializeApp({
     credential: admin.credential.cert({
         "type": process.env.TYPE,

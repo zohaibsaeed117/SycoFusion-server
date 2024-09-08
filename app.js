@@ -7,60 +7,63 @@ const auth = require('./middleware/auth');
 const errorHandler = require('./middleware/error-handler');
 const notFound = require('./middleware/not-found');
 const authRoutes = require('./routes/auth');
-const posts = require("./routes/post")
-const user = require("./routes/user")
+const posts = require("./routes/post");
+const user = require("./routes/user");
 require('dotenv').config();
 
+// Configure CORS options
 const corsOptions = {
-    origin: 'http://localhost:3000', // Specify the allowed origin
+    origin: 'http://localhost:3000', // Allow requests from this origin
     credentials: true,               // Allow credentials (cookies, authorization headers)
-    optionSuccessStatus: 200
+    optionSuccessStatus: 200         // For older browsers support
 };
 
-app.use(cors(corsOptions)); // Apply CORS with the specified options
+// Apply CORS middleware globally
+app.use(cors(corsOptions));
 
-app.options('*', cors(corsOptions)); // Handle preflight requests for all routes
+// Handle preflight requests
+app.options('*', cors(corsOptions));
 
-
-//midddleware
+// Middleware for serving static files
 app.use(express.static('./public'));
 
-app.use(express.urlencoded({ extended: false }))
-
+// Parse incoming request bodies
+app.use(express.urlencoded({ extended: false }));
 app.use(express.json());
 
-//Routes without token
+// Routes without token
 app.use(authRoutes);
 
-//Routes with authentication token
-
+// Example route
 app.get('/', (req, res) => {
-    console.log("Hello world")
-    return res.status(200).json({ success: true })
-})
-app.use(auth)
+    console.log("Hello world");
+    return res.status(200).json({ success: true });
+});
 
-app.use(posts)
+// Authentication middleware
+app.use(auth);
 
-app.use(user)
+// Routes that require authentication
+app.use(posts);
+app.use(user);
 
-
+// 404 handler
 app.use(notFound);
 
+// Global error handler
 app.use(errorHandler);
 
-
-
-
+// Start the server
 const port = process.env.PORT || 8080;
 const start = async () => {
     try {
-        connectDb(process.env.MONGO_URI)
-        app.listen(port, () => { console.log(`Listening on port ${port}`); })
+        await connectDb(process.env.MONGO_URI);
+        app.listen(port, () => { 
+            console.log(`Listening on port ${port}`); 
+        });
     } catch (err) {
-        console.log(err)
+        console.log(err);
     }
-}
-
+};
 
 start();
