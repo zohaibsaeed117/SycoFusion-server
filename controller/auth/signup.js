@@ -26,7 +26,7 @@ const signup = asyncWrapper(async (req, res) => {
     })
 
     await user.save();
-    return res.status(200).json({ type: "success", message: "Your account has been created successfully." })
+    return res.status(200).json({ success: true, message: "Your account has been created successfully." })
 })
 
 
