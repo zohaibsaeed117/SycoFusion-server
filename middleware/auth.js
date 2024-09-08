@@ -9,9 +9,10 @@ const authentication = async (req, res, next) => {
     const token = authHeader.split(' ')[1];
     try {
         const decoded = jwt.decode(token, process.env.JWT_SECRET_KEY);
-        const { id, username } = decoded
-        req.user = { id, username }
+        const { userId, username } = decoded
+        req.user = { id: userId, username }
     } catch (err) {
+        console.log(err)
         return res.status(401).json({ msg: "Not authorized to access this route" })
     }
     next();
