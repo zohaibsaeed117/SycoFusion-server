@@ -1,7 +1,3 @@
-Here's a README file template for the **SycoFusion** backend:
-
----
-
 # SycoFusion Backend
 
 This repository contains the backend API for **SycoFusion**, a social media platform where users can upload posts, like, and comment on them. The backend is built using Express.js, with MongoDB as the database and Firebase for storage.
